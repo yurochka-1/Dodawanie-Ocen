@@ -1,6 +1,14 @@
 package com.example.dodawanie_oceny;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.SeekBar;
+import android.widget.Spinner;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,17 +16,55 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
+
+    SeekBar seekBar;
+    Spinner spinner, spinner2;
+    CheckBox checkBox;
+    EditText editText;
+    Button buttonDodaj, buttonWyswietl;
+    ListView listView;
+    ArrayAdapter <Ocena>arrayAdapter;
+    ArrayList <Ocena>arrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+        seekBar = findViewById(R.id.seekBar);
+        spinner = findViewById(R.id.spinner);
+        spinner2 = findViewById(R.id.spinner2);
+        checkBox = findViewById(R.id.checkBox);
+        editText = findViewById(R.id.editTextNumber);
+        buttonDodaj = findViewById(R.id.button);
+        buttonWyswietl = findViewById(R.id.button2);
+        listView = findViewById(R.id.listView);
+
+        arrayList = new ArrayList<>();
+        ArrayList<Ocena> arrayListWybrany = new ArrayList<>();
+        arrayAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, arrayListWybrany);
+        listView.setAdapter(arrayAdapter);
+
+        buttonDodaj.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int wartoscOceny = seekBar.getProgress();
+                        String przedmiot = spinner.getSelectedItem().toString();
+                        boolean czyLiczone = checkBox.isChecked();
+                        int waga;
+                        if (czyLiczone) {
+                            waga = Integer.parseInt(editText.getText().toString());
+                        }else{
+                            waga = 0;
+                        }
+                        arrayList.add(new Ocena(wartoscOceny, waga, przedmiot, czyLiczone));
+                        arrayAdapter.notifyDataSetChanged();
+                    }
+                }
+        );
     }
 }
