@@ -1,5 +1,6 @@
 package com.example.dodawanie_oceny;
 
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -10,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -93,6 +95,26 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+
+                        TextView textView = (TextView)view;
+
+                        if (textView.getPaintFlags() == Paint.STRIKE_THRU_TEXT_FLAG){
+                            textView.setPaintFlags(Paint.CURSOR_AFTER);
+                        }else{
+                            textView.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+                        }
+                    }
+                }
+        );
+
+        listView.setOnItemLongClickListener(
+                new AdapterView.OnItemLongClickListener() {
+                    @Override
+                    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                        arrayList.remove(arrayListWybrany.get(position));
+                        arrayListWybrany.remove(position);
+                        arrayAdapter.notifyDataSetChanged();
+                        return false;
                     }
                 }
         );
