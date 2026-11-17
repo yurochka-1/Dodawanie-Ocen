@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">dodawanie_oceny</string>
+    <string-array name="przedmioty">
+        <item>Matematyka</item>
+        <item>Język  angielski</item>
+        <item>Programing</item>
+    </string-array>
 </resources>
