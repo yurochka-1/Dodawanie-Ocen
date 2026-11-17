@@ -2,6 +2,7 @@ package com.example.dodawanie_oceny;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -9,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -63,6 +65,34 @@ public class MainActivity extends AppCompatActivity {
                         }
                         arrayList.add(new Ocena(wartoscOceny, waga, przedmiot, czyLiczone));
                         arrayAdapter.notifyDataSetChanged();
+                    }
+                }
+        );
+
+        buttonWyswietl.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String wybranyPrzedmiot = spinner2.getSelectedItem().toString();
+                        arrayListWybrany.clear();
+                        //Toast.makeText(MainActivity.this, wybranyPrzedmiot, Toast.LENGTH_SHORT).show();
+                        for (int i = 0; i < arrayList.size(); i++){
+                            if (arrayList.get(i).przedmiot.equals(wybranyPrzedmiot)){
+                                arrayListWybrany.add(arrayList.get(i));
+
+                            }
+
+                        }
+                        arrayAdapter.notifyDataSetChanged();
+                    }
+                }
+        );
+
+        listView.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                     }
                 }
         );
